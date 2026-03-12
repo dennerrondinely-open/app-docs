@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { useAuth } from '@/lib/use-auth';
+import { isEmailAllowed, getEmailErrorMessage } from '@/lib/email-validation';
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -16,7 +17,14 @@ export function LoginButton() {
     try {
       setLoading(true);
       setError(null);
-      await signInWithPopup(auth, googleProvider);
+      const result = await signInWithPopup(auth, googleProvider);
+      
+      // Validate email domain
+      if (!isEmailAllowed(result.user.email)) {
+        await signOut(auth);
+        setError(getEmailErrorMessage());
+        return;
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao fazer login');
       console.error('Login error:', err);

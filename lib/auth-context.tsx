@@ -1,8 +1,9 @@
 'use client';
 
 import React, { createContext, useEffect, useState } from 'react';
-import { User, onAuthStateChanged } from 'firebase/auth';
+import { User, onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from './firebase';
+import { isEmailAllowed } from './email-validation';
 
 export interface AuthContextType {
   user: User | null;
@@ -17,8 +18,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser && !isEmailAllowed(currentUser.email)) {
+        // Sign out user if email domain is not allowed
+        await signOut(auth);
+        setUser(null);
+      } else {
+        setUser(currentUser);
+      }
       setLoading(false);
     });
 

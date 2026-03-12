@@ -33,7 +33,7 @@ export default function LoginPage() {
           <p className="text-gray-600">Documentação Técnica</p>
         </div>
 
-        <div className="w-full">
+        <div className="w-full flex flex-col items-center gap-4">
           <p className="text-center text-gray-600 mb-6">
             Faça login para acessar a documentação completa
           </p>
