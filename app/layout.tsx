@@ -18,7 +18,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="pt-BR" className={inter.className} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col">
         <AuthProvider>
-          <RootProvider>{children}</RootProvider>
+          <RootProvider
+            search={{
+              options: {
+                type: 'static',
+                api: '/api/search',
+              },
+            }}
+          >
+            {children}
+          </RootProvider>
         </AuthProvider>
       </body>
     </html>
