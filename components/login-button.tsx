@@ -54,17 +54,20 @@ export function LoginButton() {
           onClick={() => setShowDropdown(!showDropdown)}
           className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-fd-accent transition-colors"
         >
-          {user.photoURL ? (
+          {user.photoURL && user.photoURL.trim() ? (
             <img
               src={user.photoURL}
-              alt={user.displayName || 'User'}
-              className="w-8 h-8 rounded-full"
+              alt={user.displayName || user.email || 'User'}
+              className="w-8 h-8 rounded-full object-cover"
+              onError={(e) => {
+                // Fallback if image fails to load
+                e.currentTarget.style.display = 'none';
+              }}
             />
-          ) : (
-            <div className="w-8 h-8 rounded-full bg-fd-primary flex items-center justify-center text-white text-sm font-medium">
-              {(user.displayName || user.email)?.[0]?.toUpperCase()}
-            </div>
-          )}
+          ) : null}
+          <div className={`${user.photoURL && user.photoURL.trim() ? 'hidden' : ''} w-8 h-8 rounded-full bg-fd-primary flex items-center justify-center text-white text-sm font-medium shrink-0`}>
+            {(user.displayName || user.email || '?')?.[0]?.toUpperCase()}
+          </div>
           <span className="text-sm font-medium text-fd-foreground hidden sm:inline">
             {user.displayName || user.email}
           </span>
@@ -73,8 +76,8 @@ export function LoginButton() {
         {showDropdown && (
           <div className="absolute right-0 mt-1 w-48 bg-fd-background border border-fd-border rounded-lg shadow-lg z-50">
             <div className="p-3 border-b border-fd-border">
-              <p className="text-sm font-medium text-fd-foreground">{user.displayName}</p>
-              <p className="text-xs text-fd-muted-foreground">{user.email}</p>
+              <p className="text-sm font-medium text-fd-foreground">{user.displayName || 'Usuário'}</p>
+              <p className="text-xs text-fd-muted-foreground truncate">{user.email}</p>
             </div>
             <button
               onClick={handleSignOut}
