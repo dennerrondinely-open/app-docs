@@ -1,59 +1,80 @@
-# Firebase Deployment Guide
+# Firebase Hosting Deployment Guide
 
-## Setup
+## Setup Inicial
 
-1. **Instale o Firebase CLI** (já incluído no projeto):
-   ```bash
-   pnpm add -D firebase-tools
-   ```
+### 1. Instalar Firebase CLI
 
-2. **Autentique com sua conta Google**:
-   ```bash
-   npx firebase login
-   ```
+```bash
+pnpm add -D firebase-tools
+```
 
-3. **Configure o ID do seu projeto Firebase** no `.firebaserc`:
-   ```json
-   {
-     "projects": {
-       "default": "seu-firebase-project-id"
-     }
-   }
-   ```
+### 2. Autenticar com Firebase
+
+```bash
+npx firebase login
+```
+
+Isso abrirá o navegador para você autenticar com sua conta Google.
+
+### 3. Configurar Projeto (já pré-configurado)
+
+O arquivo `.firebaserc` já está configurado com:
+- Project ID: `geru-app-dev`
+- Site: `geru-app-docs`
 
 ## Build & Deploy
 
-### Build estático
+### Build Estático
+
 ```bash
 pnpm build
 ```
-Isso gera a pasta `out/` com o projeto estático pronto para o Firebase.
 
-### Deploy
+Isso gera a pasta `out/` com o projeto pronto para deploy.
+
+### Deploy para Firebase Hosting
+
 ```bash
 pnpm deploy:hosting
 ```
 
-Ou para deploy completo (se tiver outras funções):
+Ou use o comando direto:
+
 ```bash
-pnpm deploy
+firebase deploy --only hosting
 ```
 
-## Estrutura
+## Verificar Deploy
+
+Após o deploy, a aplicação estará disponível em:
+```
+https://geru-app-docs.web.app
+```
+
+## Arquivos Importantes
 
 - **`firebase.json`** - Configuração do Firebase Hosting
-- **`.firebaserc`** - Configuração do projeto
-- **`next.config.mjs`** - Configurado com `output: 'export'` para geração estática
-- **`out/`** - Pasta de saída (gerada pelo build, não commitada)
+- **`.firebaserc`** - IDs dos projetos Firebase
+- **`next.config.mjs`** - Configurado para export estático (SSG)
+- **`out/`** - Pasta gerada com arquivos estáticos (não commitada)
 
-## Próximos passos
+## Solução de Problemas
 
-1. Crie um projeto no [Firebase Console](https://console.firebase.google.com/)
-2. Obtenha seu ID do projeto
-3. Atualize o `.firebaserc` com seu ID
-4. Execute `npx firebase login` para autenticar
-5. Faça o deploy com `pnpm deploy:hosting`
+### Erro: "Invalid API Key"
+- Certifique-se de que está autenticado: `npx firebase login`
+- Verifique se o projeto existe em Firebase Console
 
-## CI/CD com GitHub Actions (opcional)
+### Erro: "Site não encontrado"
+- Confirme o nome do site em Firebase Console
+- Atualize `.firebaserc` se necessário
 
-Veja um exemplo de workflow em `.github/workflows/deploy.yml` para automatizar deploys.
+### Build falha com erro de tipos
+- Execute: `pnpm install`
+- Verifique: `pnpm build` localmente primeiro
+
+## Segurança
+
+- ✅ `.env.local` NÃO está commitado (no `.gitignore`)
+- ✅ Credenciais públicas (NEXT_PUBLIC_*) são seguras
+- ✅ Firebase Security Rules protegem dados no backend
+
