@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useAuth } from '@/lib/use-auth';
+import { useRouter } from 'next/navigation';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -10,13 +11,15 @@ interface ProtectedRouteProps {
 
 export function ProtectedRoute({ children, fallback }: ProtectedRouteProps) {
   const { isAuthenticated, loading } = useAuth();
+  const router = useRouter();
 
   if (loading) {
     return <div className="p-4">Carregando...</div>;
   }
 
   if (!isAuthenticated) {
-    return fallback || <div className="p-4 text-red-600">Acesso negado. Faça login para continuar.</div>;
+    router.push('/login');
+    return fallback || <div className="p-4 text-red-600">Redirecionando para login...</div>;
   }
 
   return <>{children}</>;
