@@ -1,6 +1,5 @@
 {
   "hosting": {
-    "target": "docs",
     "site": "geru-app-docs",
     "public": "out",
     "ignore": [
