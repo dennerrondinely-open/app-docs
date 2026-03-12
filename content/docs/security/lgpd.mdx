@@ -1,0 +1,25 @@
+---
+title: LGPD e dados sensíveis
+description: Classificação de dados e cuidados de privacidade no app.
+---
+
+## Dados de alta sensibilidade
+
+- CPF e documento
+- Dados bancários
+- Renda e perfil financeiro
+- Biometria/selfie (liveness)
+
+## Regras mínimas
+
+- Coletar apenas dados necessários por etapa
+- Garantir consentimento quando aplicável
+- Minimizar retenção local
+- Evitar persistência indevida em logs
+
+## Fluxos com tratamento sensível
+
+- `profile` (atualização de dados)
+- `public` (atualização pública)
+- `liveness` e `biometrics`
+- `personal_loan` e `transaction`

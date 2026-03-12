@@ -1,0 +1,42 @@
+---
+title: Visão geral
+description: Mapa executivo e técnico do Geru App, com foco em instalação, operação, arquitetura e fluxos.
+---
+
+## O que é o projeto
+
+O `geru-app` é um aplicativo Flutter voltado à jornada de crédito e serviços financeiros da Geru. O app reúne onboarding, autenticação, consulta de limite, contratação de crédito pessoal, pagamentos, Pix, atualização cadastral e gestão de documentos.
+
+## Stack principal
+
+- `Flutter` para a aplicação mobile
+- `flutter_modular` para composição de módulos e rotas
+- `bloc` para gerenciamento de estado
+- `Dio` encapsulado em `HttpClient` para integração HTTP
+- `Firebase` para analytics, crashlytics e configuração remota
+- `FVM` para fixar a versão do Flutter
+
+## Estrutura macro
+
+- `lib/main*.dart`: entrypoints por flavor
+- `lib/modules`: features visuais, rotas, páginas e blocs de fluxo
+- `lib/libs`: APIs, repositories, models e blocs de domínio compartilhados
+- `lib/services`: integrações externas e serviços de dispositivo
+- `android/` e `ios/`: configuração nativa
+- `test/`: testes unitários e de blocs
+
+## Flavors suportadas
+
+| Flavor | Entry point | Objetivo |
+| --- | --- | --- |
+| `prod` | `lib/main.dart` | Produção |
+| `dev` | `lib/main.dev.dart` | Desenvolvimento |
+| `homolog` | `lib/main.homolog.dart` | Homologação |
+| `sandbox` | `lib/main.sandbox.dart` | Sandbox |
+
+## Onde começar
+
+- Para instalar o ambiente, siga [Instalação](/docs/setup/installation).
+- Para rodar localmente, siga [Execução](/docs/setup/running).
+- Para entender a solução, siga [Arquitetura](/docs/architecture/overview).
+- Para state management, veja [Blocs, Events e States](/docs/state-management/overview).

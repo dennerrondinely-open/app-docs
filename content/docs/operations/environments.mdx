@@ -1,0 +1,32 @@
+---
+title: Ambientes e configuração
+description: Matriz de ambientes, flavors e pontos de configuração operacional.
+---
+
+## Matriz de ambientes
+
+| Ambiente | Flavor | Entry point |
+| --- | --- | --- |
+| Desenvolvimento | `dev` | `lib/main.dev.dart` |
+| Homologação | `homolog` | `lib/main.homolog.dart` |
+| Produção | `prod` | `lib/main.dart` |
+| Sandbox | `sandbox` | `lib/main.sandbox.dart` |
+
+## Configuração base
+
+Cada entrypoint define `Flavor` e `Keys.apiUrl`.
+
+## Comandos por ambiente
+
+```bash
+fvm flutter run lib/main.dev.dart --flavor=dev
+fvm flutter run lib/main.homolog.dart --flavor=homolog
+fvm flutter run lib/main.dart --flavor=prod
+fvm flutter run lib/main.sandbox.dart --flavor=sandbox
+```
+
+## Dependências operacionais
+
+- Firebase (analytics/crashlytics/remote config)
+- Serviços externos (AllowMe, Serasa, SFMC, Motiv8)
+- Chaves nativas Android/iOS por ambiente

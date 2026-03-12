@@ -1,0 +1,15 @@
+{
+  "title": "Geru App",
+  "pages": [
+    "index",
+    "setup",
+    "architecture",
+    "product",
+    "state-management",
+    "api-contracts",
+    "operations",
+    "security",
+    "quality",
+    "adr"
+  ]
+}

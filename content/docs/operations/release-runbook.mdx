@@ -1,0 +1,33 @@
+---
+title: Runbook de release
+description: Passo a passo para gerar release com rastreabilidade e rollback.
+---
+
+## Pré-release
+
+1. Confirmar branch e changelog
+2. Rodar análise e testes
+3. Validar build da flavor alvo
+4. Confirmar configurações nativas e chaves
+
+## Comandos úteis
+
+```bash
+fvm flutter analyze
+fvm flutter test
+fvm flutter build apk --flavor=homolog -t lib/main.homolog.dart
+fvm flutter build apk --flavor=prod -t lib/main.dart
+```
+
+## Checklist
+
+- [ ] QA funcional em fluxos críticos
+- [ ] Verificação de crash-free em homolog
+- [ ] Aprovação de produto/negócio
+- [ ] Plano de rollback documentado
+
+## Rollback
+
+- Reverter para versão anterior publicada
+- Bloquear rollout gradual da versão nova
+- Abrir incidente com causa raiz e correção

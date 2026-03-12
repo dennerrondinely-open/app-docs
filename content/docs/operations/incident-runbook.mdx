@@ -1,0 +1,29 @@
+---
+title: Runbook de incidente
+description: Procedimento padrão para incidentes de produção.
+---
+
+## Classificação
+
+- `Sev1`: indisponibilidade total ou impacto financeiro crítico
+- `Sev2`: fluxo principal degradado com workaround
+- `Sev3`: problema localizado sem impacto sistêmico
+
+## Resposta inicial
+
+1. Abrir canal de incidente
+2. Nomear incident commander
+3. Congelar deploys até estabilização
+4. Coletar evidências (logs, crashlytics, métricas)
+
+## Diagnóstico rápido
+
+- Verificar endpoints críticos (`auth`, `workflow`, `payment`, `servicing`)
+- Verificar taxa de erro por versão de app
+- Isolar se problema é backend, app, SDK externo ou configuração
+
+## Encerramento
+
+- Publicar timeline
+- Registrar causa raiz
+- Definir ações preventivas (produto + engenharia)

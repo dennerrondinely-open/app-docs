@@ -1,0 +1,33 @@
+---
+title: Estratégia de testes
+description: Como validar regressão funcional e técnica no app.
+---
+
+## Pirâmide de testes
+
+- Testes unitários para `models`, `repositories` e `utils`
+- Testes de `bloc` para transições de estado
+- Testes de integração para fluxos críticos (quando aplicável)
+
+## Ferramentas já usadas
+
+- `flutter_test`
+- `bloc_test`
+- `mocktail`
+
+## Comandos
+
+```bash
+fvm flutter test
+fvm flutter test --coverage
+fvm flutter analyze
+```
+
+## Escopo prioritário
+
+- autenticação e sessão
+- workflow de elegibilidade
+- crédito pessoal
+- transações Pix
+- pagamentos
+- documentos servicing

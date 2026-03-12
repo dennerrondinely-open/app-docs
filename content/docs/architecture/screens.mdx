@@ -1,0 +1,92 @@
+---
+title: Telas do projeto
+description: Inventário funcional das telas, agrupado por domínio e jornada.
+---
+
+## Entrada e autenticação
+
+| Grupo | Telas principais |
+| --- | --- |
+| Intro | `intro_page`, `intro_onboarding_page` |
+| Login | `login_page`, `login_code_page`, `login_help_page` |
+| Cadastro | `register_personal_data_page`, `register_contact_data_page`, `register_activation_page`, `register_help_page` |
+
+## Home e navegação raiz
+
+| Grupo | Telas principais |
+| --- | --- |
+| Root | `splash_page`, `app_update_page` |
+| Home | `home_page` |
+| Error | `error_page`, `connection_error_page`, `person_error_page` |
+
+## Dados cadastrais e perfil
+
+| Grupo | Telas principais |
+| --- | --- |
+| Endereço | `address_data_page` |
+| Perfil | `menu_page`, `preferences_page`, `profile_data_menu_page` |
+| Dados pessoais | `personal_data_page`, `personal_data_code_page`, `personal_data_successful_page`, `personal_data_failed_page` |
+| Dados profissionais | `professional_data_page` |
+| Exclusão de conta | `account_delete_page`, `account_delete_successful_page`, `account_delete_forbidden_page` |
+| Documentos e transações | `transactions_page`, `documents_page` |
+| Informe de rendimentos | `income_report_page`, `income_report_error_page`, `income_report_download_error_page` |
+
+## Jornada de crédito pessoal
+
+| Etapa | Telas principais |
+| --- | --- |
+| Introdução | `personal_loan_intro_page`, `personal_loan_page`, `personal_loan_info_page` |
+| Simulação e dados | `personal_loan_simulation_page`, `personal_loan_purpose_page`, `personal_loan_data_page`, `personal_loan_personal_data_page` |
+| Oferta | `personal_loan_offer_page`, `personal_loan_offer_alert_page`, `personal_loan_change_offer_page`, `personal_loan_change_due_day_page` |
+| Seguro | `personal_loan_insurance_page`, `personal_loan_insurance_alert_page`, `insurance_info_page`, `insurance_details_page` |
+| Revisão e assinatura | `personal_loan_summary_page`, `personal_loan_contract_terms_page`, `personal_loan_proceed_page`, `personal_loan_signature_page` |
+| Resultado | `personal_loan_loading_page`, `personal_loan_successful_page`, `personal_loan_failed_page` |
+
+## Transações e Pix
+
+| Etapa | Telas principais |
+| --- | --- |
+| Onboarding | `transaction_onboarding_page`, `method_page` |
+| Entrada de chave | `key_page`, `transaction_clipboard_page`, `qr_code_page`, `qr_code_permission_page`, `key_error_page` |
+| Valor e condições | `amount_page`, `instalment_due_day_page`, `loan_conditions_page`, `summary_page` |
+| Contrato | `signature_page`, `loan_contract_terms_page`, `confirmation_page` |
+| Conclusão | `transaction_receipt_page`, `transaction_finished_page`, `transaction_error_page` |
+
+## Pagamentos
+
+| Subfluxo | Telas principais |
+| --- | --- |
+| Pagamento base | `payment_list_page`, `payment_slip_page`, `payment_pix_page`, `payment_pix_qrcode_page` |
+| Faturas | `invoices_page`, `instalment_details_page`, `instalment_receipt_page` |
+| Atraso | `overdue_payment_page`, `overdue_payment_selection_page`, `overdue_payment_confirmation_page`, `overdue_payment_invoices_details_page` |
+| Antecipação | `pre_payment_page`, `pre_payment_type_page`, `pre_payment_confirmation_page` |
+| Flex payment | `flex_payment_value_page`, `flex_payment_strategies_page`, `flex_payment_simulation_page` |
+| Refinanciamento | `refinancing_info_page`, `refinancing_confirmation_page` |
+
+## Antifraude e validação
+
+| Grupo | Telas principais |
+| --- | --- |
+| Liveness | `liveness_intro_page`, `liveness_started_page`, `liveness_permission_page`, `liveness_location_page`, `liveness_sending_page`, `liveness_successful_page`, `liveness_failed_page` |
+| Biometrics | `biometrics_page`, `biometrics_activation_page`, `biometrics_error_page` |
+| Open Finance | `open_finance_intro_page`, `open_finance_info_page`, `open_finance_successful_page` |
+
+## Produtos e vitrines
+
+| Produto | Telas principais |
+| --- | --- |
+| Geru Pay | `gerupay_page`, `gerupay_info_page` |
+| Geru Shop | `gerushop_page`, `gerushop_info_page`, `gerushop_partner_page`, `gerushop_loading_page`, `gerushop_webview_page` |
+| BNPL | `bnpl_applications_page`, `bnpl_confirmation_page`, `bnpl_payment_page`, `bnpl_qrcode_page`, `bnpl_successful_page`, `bnpl_error_page`, `bnpl_loading_page` |
+| Amazon | `amazon_page`, `amazon_info_page` |
+| FGTS | `fgts_info_page` |
+| Payroll Loan | `payroll_loan_info_page` |
+
+## Fluxos auxiliares
+
+| Grupo | Telas principais |
+| --- | --- |
+| Workflow | `workflow_loading_page`, `workflow_intro_page`, `workflow_limit_page`, `workflow_error_page` |
+| Overflow | `overflow_intro_page`, `overflow_bank_info_page`, `overflow_successful_page`, `overflow_failed_page` |
+| Atualização pública | `update_data_menu_page`, `update_data_email_page`, `update_data_mobile_page`, `update_data_code_page`, `update_data_successful_page`, `update_data_failed_page` |
+| Feedback | `feedback_page` |

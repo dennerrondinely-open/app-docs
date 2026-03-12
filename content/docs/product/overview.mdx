@@ -1,0 +1,32 @@
+---
+title: Visão de produtos
+description: Organização das jornadas por produto dentro do Geru App.
+---
+
+## Portfólio coberto pelo app
+
+- `personal_loan`: contratação de crédito pessoal
+- `transaction` (Geru Pay): uso de limite via Pix
+- `payment`: pagamentos e regularização
+- `bnpl`: jornada de compra parcelada
+- `geru_shop`: parceiros e redirecionamento
+- `servicing`: documentos e termos pós-contratação
+
+## Mapeamento por módulo
+
+| Produto | Módulo principal | Rotas |
+| --- | --- | --- |
+| Crédito pessoal | `lib/modules/personal_loan` | `personal_loan_routes.dart` |
+| Transações/Pix | `lib/modules/transaction` | `transaction_routes.dart` |
+| Pagamentos | `lib/modules/payment` | `payment_routes.dart` |
+| Vitrine de produtos | `lib/modules/product` | `product_routes.dart` |
+| Documentos | `lib/modules/profile` + `lib/libs/servicing` | `profile_routes.dart` |
+
+## Dependências de fluxo
+
+Os produtos utilizam componentes transversais:
+
+- `WorkflowBloc` para elegibilidade
+- `LivenessBloc` para antifraude
+- `OpenFinanceBloc` para consentimento e coleta
+- `AuthBloc` e `PersonBloc` para contexto de sessão

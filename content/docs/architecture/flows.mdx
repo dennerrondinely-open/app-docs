@@ -1,0 +1,73 @@
+---
+title: Fluxos do projeto
+description: Principais jornadas de negócio implementadas no app.
+---
+
+## 1. Bootstrap e sessão
+
+1. Usuário abre o app
+2. `SplashPage` sobe infraestrutura e avalia atualização
+3. `AuthBloc` verifica sessão armazenada
+4. `InitializeAppBloc` ativa serviços auxiliares
+5. `RootModule` redireciona para intro, login ou home
+
+## 2. Login
+
+1. Usuário informa documento em `login_page`
+2. `LoginBloc` solicita código via `AuthApi`
+3. Usuário informa o código em `login_code_page`
+4. `AuthBloc` autentica e popula a sessão
+5. App carrega `PersonBloc`, `WorkflowBloc` e módulos dependentes
+
+## 3. Cadastro e ativação
+
+1. Usuário preenche dados pessoais e contato
+2. `RegisterBloc` valida consentimentos e payload
+3. `UserApi` cria ou ativa o usuário
+4. Código de ativação é validado
+5. Sessão é criada e o fluxo segue para a jornada principal
+
+## 4. Onboarding e workflow
+
+1. `WorkflowBloc` busca o estado de elegibilidade em `/v2/workflow`
+2. Dependendo do retorno, o app exige endereço, dados complementares, liveness, biometria ou open finance
+3. Cada etapa persiste dados em blocs/repositories específicos
+4. Ao concluir as pendências, o usuário segue para limite, produto ou home
+
+## 5. Crédito pessoal
+
+1. Home ou vitrine direciona para `personal_loan`
+2. App carrega oferta atual, simulações e disponibilidade
+3. Usuário preenche finalidade, dados e condições
+4. Fluxos auxiliares podem exigir documento, open finance e liveness
+5. Usuário revisa condições e assina contrato
+6. App finaliza com tela de sucesso, erro ou processamento
+
+## 6. Transação com limite / Pix
+
+1. Usuário entra em `transaction_onboarding_page`
+2. Informa chave Pix manualmente, clipboard ou QR Code
+3. `NewTransactionBloc` consulta chave, ofertas e condições
+4. Usuário define valor, vencimento e confirma contrato
+5. Liveness e assinatura podem ser solicitados
+6. App acompanha status e exibe recibo ou erro
+
+## 7. Pagamentos
+
+1. `PaymentBloc` carrega `books` e faturas
+2. Usuário escolhe boleto, Pix, atraso, antecipação ou flex payment
+3. Blocs especializados executam simulações e confirmações
+4. App gera comprovante, PDF ou feedback final
+
+## 8. Documentos de servicing
+
+1. Usuário abre documentos em perfil/transações
+2. `DocumentsBloc` busca contratos e documentos por `loanUuid`
+3. App pode listar documentos, baixar PDF, abrir CCB ou termo de quitação
+
+## 9. Atualização de dados sensíveis
+
+1. Usuário inicia atualização no perfil ou fluxo público
+2. Sistema pede código, liveness ou selfie conforme risco
+3. `SensitiveDataBloc` ou `UpdateDataBloc` acompanha as etapas
+4. App conclui com sucesso, falha ou necessidade de suporte

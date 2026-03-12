@@ -1,0 +1,107 @@
+---
+title: Endpoints e dados
+description: Inventário dos endpoints HTTP usados pelo app e dos principais dados trafegados.
+---
+
+## Convenções
+
+- Os endpoints ficam principalmente em `lib/libs/**/api/*.dart`
+- O retorno normalmente é convertido em `models` da própria lib
+- O transporte HTTP é centralizado em `HttpClient`
+
+## Autenticação e conta
+
+| API | Método | Endpoint | Retorno principal |
+| --- | --- | --- | --- |
+| `AuthApi` | `POST` | `/v1/oauth/token-validation-code` | `Auth` |
+| `AuthApi` | `POST` | `/v1/user/send/validation-code` | `Page` |
+| `AuthApi` | `POST` | `/v1/oauth/refresh` | `Auth` |
+| `UserApi` | `POST` | `/v1/user/create` | `void` |
+| `UserApi` | `POST` | `/v1/user/activate` | `Auth` |
+| `UserApi` | `DELETE` | `/v1/user/delete` | `void` |
+
+## Pessoa, endereço e conta bancária
+
+| API | Método | Endpoint | Retorno principal |
+| --- | --- | --- | --- |
+| `PersonApi` | `GET` | `/v1/person` | `Person` |
+| `PersonApi` | `PUT` | `/v1/person` | `Person` |
+| `PersonApi` | `POST` | `/v1/person/update` | `SensitiveData` |
+| `PersonApi` | `POST` | `/v1/person/validate/code/{code}` | `SensitiveData` |
+| `AddressApi` | `GET` | `/v1/person/address/primary` | `Address` |
+| `AddressApi` | `POST` | `/v1/person/address/primary` | `Address` |
+| `AddressApi` | `GET` | `/v1/external/correios/{zipCode}` | `Address` |
+| `BankAccountApi` | `GET` | `/v1/person/bank/primary` | `BankAccount` |
+| `BankAccountApi` | `POST` | `/v1/person/bank` | `BankAccount` |
+
+## Workflow, produtos e crédito
+
+| API | Método | Endpoint | Retorno principal |
+| --- | --- | --- | --- |
+| `WorkflowApi` | `GET` | `/v2/workflow` | `Workflow` |
+| `ProductApi` | `GET` | `/v2/product/loan-limit` | `LimitDetail` |
+| `ProductApi` | `GET` | `/v1/product/loan-personal-geru` | `LoanLegacy?` |
+| `ProductApi` | `GET` | `/v1/product/shop/partners` | `List<GeruShopPartner>` |
+| `LoanApi` | `GET` | `/v1/loan/{loanId}` | `Loan` |
+| `LoanApi` | `POST` | `/v1/loan/{loanId}/select-offer` | `Loan` |
+| `LoanApi` | `POST` | `/v1/loan/{loanId}/sign-contract/Limit` | `Loan` |
+| `PersonalLoanApi` | `GET` | `/v1/personal-loan/current` | `Loan` |
+| `PersonalLoanApi` | `GET` | `/v2/personal-loan/{loanId}/offers` | `Offer` |
+| `PersonalLoanApi` | `POST` | `/v2/personal-loan/{loanId}/pick-loan-condition/{conditionUuid}` | `Loan` |
+| `PersonalLoanApi` | `POST` | `/v1/personal-loan/{loanId}/sign-contract/Personal` | `Loan` |
+
+## Pagamentos e servicing
+
+| API | Método | Endpoint | Retorno principal |
+| --- | --- | --- | --- |
+| `LedgerApi` | `GET` | `/v1/ledger/books` | `List<Book>` |
+| `LedgerApi` | `GET` | `/v1/ledger/books/{bookUuid}/invoices` | `List<Invoice>` |
+| `PaymentApi` | `GET` | `/v2/payment/{bookUuid}/pre-payment/simulation` | `List<Invoice>` |
+| `PaymentApi` | `POST` | `/v2/payment/{bookUuid}/settlement` | `PendingPayment` |
+| `PaymentApi` | `GET` | `/v2/payment/{bookUuid}/offers` | `List<PaymentOffer>` |
+| `PaymentApi` | `POST` | `/v2/payment/{bookUuid}/offers` | `PendingPayment` |
+| `ServicingApi` | `GET` | `/v1/servicing/loan/all` | `List<LoanDocument>` |
+| `ServicingApi` | `GET` | `/v1/servicing/documents/{loanUuid}` | `List<Document>` |
+| `ServicingApi` | `GET` | `/v1/servicing/documents/{loanUuid}/ccb` | `String` |
+| `ServicingApi` | `GET` | `/v1/servicing/documents/{loanUuid}/discharge-term` | `String` |
+
+## Liveness, Open Finance, público e Pix
+
+| API | Método | Endpoint | Retorno principal |
+| --- | --- | --- | --- |
+| `LivenessApi` | `POST` | `/v2/liveness` | `Liveness` |
+| `LivenessApi` | `GET` | `/v1/liveness` | `Liveness` |
+| `OpenFinanceApi` | `GET` | `/v1/data-collection/open-finance/last` | `OpenFinance` |
+| `OpenFinanceApi` | `POST` | `/v1/data-collection/open-finance` | `String` |
+| `PublicApi` | `POST` | `/v1/public/person/update` | `SensitiveData` |
+| `PublicApi` | `POST` | `/v1/public/person/validate/code` | `SensitiveData` |
+| `PublicApi` | `POST` | `/v1/public/liveness` | `Liveness` |
+| `PixKeyInfoApi` | `POST` | `/v1/pix/key-info` | `PixKeyInfo` |
+| `PixKeyInfoApi` | `POST` | `/v1/pix/qrcode-info` | `PixKeyInfo` |
+
+## Dados principais trafegados
+
+Os modelos mais recorrentes nas integrações são:
+
+- `Auth`
+- `Person`
+- `SensitiveData`
+- `Address`
+- `BankAccount`
+- `Workflow`
+- `Loan`
+- `Offer`
+- `Book`
+- `Invoice`
+- `PendingPayment`
+- `LoanDocument`
+- `Document`
+- `Liveness`
+- `OpenFinance`
+- `PixKeyInfo`
+
+## Onde aprofundar
+
+Para detalhar um endpoint, siga a trilha:
+
+`lib/libs/<domínio>/api` → `repositories` → `models`

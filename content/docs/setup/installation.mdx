@@ -1,0 +1,90 @@
+---
+title: Instalação
+description: Como preparar o ambiente de desenvolvimento do Geru App.
+---
+
+## Pré-requisitos
+
+Antes de instalar o projeto, garanta:
+
+- `Git`
+- `FVM`
+- `Flutter` na versão definida pelo projeto
+- `Java 17`
+- `Android Studio` + Android SDK
+- `Xcode` para iOS, quando estiver em macOS
+
+## Clonando o repositório
+
+```bash
+cd /caminho/onde/quer/trabalhar
+git clone <url-do-repositorio>
+cd geru-app
+```
+
+## Instalando dependências Flutter
+
+```bash
+fvm flutter pub get
+```
+
+## Gerando código
+
+O projeto utiliza `build_runner` para geração de código.
+
+```bash
+fvm flutter pub run build_runner build --delete-conflicting-outputs
+```
+
+Para deixar rodando em modo watch:
+
+```bash
+fvm flutter pub run build_runner watch --delete-conflicting-outputs
+```
+
+## Android
+
+### SDK e licenças
+
+```bash
+sdkmanager --licenses
+```
+
+### Java
+
+Confirme que a máquina está com `Java 17`:
+
+```bash
+java -version
+```
+
+## iOS
+
+Em macOS, instale também as dependências do CocoaPods:
+
+```bash
+cd ios
+pod install
+cd ..
+```
+
+## Problemas comuns
+
+### Limpar ambiente
+
+```bash
+fvm flutter clean
+fvm flutter pub get
+```
+
+### Regerar código
+
+```bash
+fvm flutter pub run build_runner build --delete-conflicting-outputs
+```
+
+### Análise estática
+
+```bash
+fvm flutter analyze
+```

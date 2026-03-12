@@ -1,0 +1,159 @@
+---
+title: Modelos de dados
+description: Catálogo dos principais modelos de dados usados no app, com origem e payloads de referência.
+---
+
+## Objetivo
+
+Esta página centraliza os **modelos de dados** mais relevantes do projeto, indicando:
+
+- onde cada modelo está no código
+- em quais fluxos ele aparece
+- estrutura base dos dados
+
+## Mapa por domínio
+
+| Domínio | Modelos principais | Caminho |
+| --- | --- | --- |
+| `auth` | `Auth`, `Page` | `lib/libs/auth/models` |
+| `user` | `User`, `UserRegistration` | `lib/libs/user/models` |
+| `person` | `Person`, `SensitiveData`, `OccupationCbo` | `lib/libs/person/models` |
+| `address` | `Address`, `ZipCode`, `CountryState` | `lib/libs/address/models` |
+| `bank_account` | `BankAccount`, `BankCode` | `lib/libs/bank_account/models` |
+| `workflow` | `Workflow`, `WorkflowLimit`, `WorkflowOptions` | `lib/libs/workflow/models` |
+| `loan` | `Loan`, `LoanCondition`, `LoanOffer`, `LoanContract` | `lib/libs/loan/models` |
+| `personal_loan` | `Offer`, `OfferAvailability` | `lib/libs/personal_loan/models` |
+| `product` | `LimitDetail`, `BnplApplication`, `GeruShopPartner` | `lib/libs/product/models` |
+| `payment` | `PaymentOffer`, `FlexPaymentStrategy`, `FlexPaymentSimulation` | `lib/libs/payment/models` |
+| `ledger` | `Book`, `Invoice`, `Instalment`, `PendingPayment` | `lib/libs/ledger/models` |
+| `servicing` | `LoanDocument`, `Document` | `lib/libs/servicing/models` |
+| `liveness` | `Liveness`, `LivenessReviewStatus` | `lib/libs/liveness/models` |
+| `open_finance` | `OpenFinance` | `lib/libs/open_finance/models` |
+| `pix_key_info` | `PixKeyType`, `QRCodeType`, `PersonType` | `lib/libs/pix_key_info/models` |
+| `remote_config` | `FeatureFlags`, `GeneralConfig`, `VersionControl` | `lib/libs/remote_config/models` |
+
+## Estruturas de referência
+
+### `Auth`
+
+Arquivo: `lib/libs/auth/models/auth_model.dart`
+
+```json
+{
+  "access_token": "<jwt>",
+  "refresh_token": "<refresh-token>"
+}
+```
+
+### `Person`
+
+Arquivo: `lib/libs/person/models/person_model.dart`
+
+```json
+{
+  "cpf": 12345678901,
+  "name": "Nome Sobrenome",
+  "primaryEmailAddress": "email@dominio.com",
+  "primaryPhoneNumber": 11999999999,
+  "monthlyIncome": 3500.0,
+  "dateOfBirth": "1990-01-01T00:00:00.000Z",
+  "educationLevel": "HIGH_SCHOOL",
+  "maritalStatus": "SINGLE",
+  "occupationType": "EMPLOYED"
+}
+```
+
+### `Loan`
+
+Arquivo: `lib/libs/loan/models/loan_model.dart`
+
+```json
+{
+  "id": 12345,
+  "personId": 67890,
+  "createdAt": "2026-03-12T10:00:00.000Z",
+  "state": "APPROVED",
+  "productCode": "Limit",
+  "basicPersonalInfo": { "name": "Nome" },
+  "loanConditions": { "desiredPrincipal": 1000.0 },
+  "necessaryDocuments": ["SELFIE", "RG_FRONT", "RG_BACK"]
+}
+```
+
+### `PaymentOffer`
+
+Arquivo: `lib/libs/payment/models/payment_offer.dart`
+
+```json
+{
+  "uuid": "offer-uuid",
+  "value": 1300.50,
+  "discount": 120.25,
+  "dueDate": "2026-03-20T00:00:00.000Z",
+  "affectedInvoices": [
+    "2026-03-10T00:00:00.000Z"
+  ],
+  "type": "SETTLEMENT",
+  "details": {}
+}
+```
+
+### `Workflow`
+
+Arquivo: `lib/libs/workflow/models/workflow.dart`
+
+```json
+{
+  "limit": {},
+  "bnpl": {},
+  "personalCredit": {},
+  "workflowOptions": {},
+  "books": ["book-uuid"],
+  "pendingOverflows": []
+}
+```
+
+### `LoanDocument` e `Document` (Servicing)
+
+Arquivos:
+
+- `lib/libs/servicing/models/loan_document_model.dart`
+- `lib/libs/servicing/models/document.dart`
+
+`LoanDocument` é usado no endpoint `GET /v1/servicing/loan/all`:
+
+```json
+{
+  "uuid": "loan-uuid",
+  "instalmentValue": 250.0,
+  "instalmentNumber": 12,
+  "grantedAt": "2025-10-10T00:00:00.000Z",
+  "disbursements": []
+}
+```
+
+`Document` é usado no endpoint `GET /v1/servicing/documents/{loanUuid}`:
+
+```json
+{
+  "url": "https://.../file.pdf",
+  "date": "2026-02-01T00:00:00.000Z",
+  "type": "CCB"
+}
+```
+
+## Relação modelo x camada
+
+A leitura recomendada é:
+
+1. `models/` para entender contrato de dados
+2. `api/` para entender endpoint de origem
+3. `repositories/` para transformação e regras
+4. `bloc/state` para consumo em UI
+
+## Boas práticas para evolução
+
+- manter os modelos `JsonSerializable` como fonte da verdade
+- evitar duplicar contratos em `modules`
+- criar `copyWith` e `Equatable` quando o modelo participa de estado de tela
+- manter enums e `fromJson` centralizados no domínio

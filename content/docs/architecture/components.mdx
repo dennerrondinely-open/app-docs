@@ -1,0 +1,83 @@
+---
+title: Componentes do projeto
+description: Principais componentes técnicos do app e o papel de cada um.
+---
+
+## Componentes estruturais
+
+### Entry points
+
+- `lib/main.dart`
+- `lib/main.dev.dart`
+- `lib/main.homolog.dart`
+- `lib/main.sandbox.dart`
+
+Cada arquivo define a `Flavor`, injeta a `apiUrl` e inicia o app via `initApp()`.
+
+### Root
+
+- `lib/modules/root/root_module.dart`: composição de dependências e rotas
+- `lib/modules/root/root_widget.dart`: `MaterialApp.router`
+- `lib/modules/root/root_guards.dart`: guards de navegação
+
+### Navegação
+
+O app usa `flutter_modular`.
+
+Cada feature expõe:
+
+- um arquivo `*_routes.dart` com os paths
+- um `*_module.dart` com binds específicos
+- pages vinculadas às rotas
+
+### Estado
+
+O gerenciamento de estado é centrado em `Bloc`.
+
+Existem dois grupos:
+
+- blocs de domínio compartilhado em `lib/libs/**/blocs`
+- blocs de fluxo e tela em `lib/modules/**/blocs`
+
+### Integração HTTP
+
+- `lib/libs/common/utils/http_client.dart`
+- `lib/libs/common/utils/error_interceptor.dart`
+- `lib/libs/common/utils/utm_interceptor.dart`
+
+Esse conjunto encapsula autenticação, headers, tratamento de erro e tracking.
+
+### Repositories
+
+Repositories traduzem chamadas de APIs em operações consumíveis pelos blocs.
+
+Exemplos:
+
+- `AuthRepository`
+- `PersonRepository`
+- `LoanRepository`
+- `ProductRepository`
+- `LedgerRepository`
+- `WorkflowRepository`
+
+### Integrações externas
+
+O projeto conversa com vários provedores e SDKs:
+
+- `Firebase`
+- `Salesforce Marketing Cloud`
+- `AllowMe`
+- `Serasa`
+- `Motiv8`
+- biometria local via `local_auth`
+
+## Organização recomendada para leitura
+
+Ao estudar uma funcionalidade, a ordem mais eficiente é:
+
+1. `*_routes.dart`
+2. `pages/`
+3. `bloc.dart`, `event.dart`, `state.dart`
+4. `repositories/`
+5. `api/`
+6. `models/`

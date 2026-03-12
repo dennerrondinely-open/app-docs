@@ -1,0 +1,37 @@
+---
+title: ADR-0001 - Flutter Modular + Bloc
+description: Decisão de arquitetura para navegação modular e gerenciamento de estado previsível.
+---
+
+## Contexto
+
+O app possui múltiplas jornadas de negócio (onboarding, crédito, transações, pagamentos), com regras complexas e dependências entre módulos.
+
+## Decisão
+
+Adotar:
+
+- `flutter_modular` para composição de módulos, binds e rotas
+- `bloc` para separar UI, eventos e estado com previsibilidade
+
+## Alternativas consideradas
+
+- navegação manual com injeção ad-hoc
+- gerenciamento de estado centrado em widgets
+
+## Consequências
+
+### Positivas
+
+- melhor isolamento por domínio
+- previsibilidade de fluxo por `event/state`
+- facilidade para testes de regras
+
+### Negativas
+
+- curva de aprendizado inicial maior
+- volume maior de arquivos por feature
+
+## Revisão
+
+Revisitar a decisão se houver necessidade de simplificação extrema para features pequenas ou mudança estrutural de plataforma.

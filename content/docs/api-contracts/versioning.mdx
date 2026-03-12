@@ -1,0 +1,30 @@
+---
+title: Versionamento e compatibilidade
+description: Regras para manter compatibilidade entre app e backend.
+---
+
+## Estratégia
+
+- Endpoints coexistem em `v1` e `v2` durante transição
+- O app deve preferir `v2` quando disponível
+- `fallback` para `v1` só quando explicitamente implementado
+
+## Tipos de mudança
+
+### Não breaking
+
+- Adição de campo opcional
+- Nova rota sem alterar contrato existente
+
+### Breaking
+
+- Remoção/renomeação de campo
+- Alteração de tipo
+- Mudança semântica de enum sem compatibilidade
+
+## Regras de rollout
+
+1. Publicar backend com compatibilidade retroativa
+2. Publicar app consumindo novo contrato
+3. Medir erros/observabilidade
+4. Remover contrato legado após janela acordada

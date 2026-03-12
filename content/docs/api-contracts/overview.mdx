@@ -1,0 +1,64 @@
+---
+title: Contratos de API
+description: Padrões de contrato HTTP e checklist para evolução segura dos endpoints.
+---
+
+## Catálogo completo
+
+O inventário completo de contratos (todos os `Api` em `lib/libs/**/api/*.dart`) está em:
+
+- [Inventário completo de contratos](/docs/api-contracts/inventory)
+
+Esse catálogo inclui:
+
+- método HTTP
+- path
+- retorno principal
+- arquivo de origem
+
+## Estrutura de contrato adotada
+
+- Clientes HTTP em `lib/libs/**/api/*.dart`
+- DTOs em `lib/libs/**/models/*.dart`
+- Conversão via `JsonSerializable`
+- Consumo da UI por `Repository -> Bloc`
+
+## Checklist para novo endpoint
+
+1. Criar método em `Api`
+2. Modelar request/response em `models`
+3. Mapear no `Repository`
+4. Integrar no `Bloc`
+5. Cobrir com teste unitário de repository/bloc
+6. Atualizar documentação de endpoint e modelo
+
+## Exemplo de contrato (servicing)
+
+**Request**
+
+```http
+GET /v1/servicing/loan/all
+```
+
+**Response (shape)**
+
+```json
+[
+  {
+    "uuid": "loan-uuid",
+    "instalmentValue": 250.0,
+    "instalmentNumber": 12,
+    "grantedAt": "2025-10-10T00:00:00.000Z",
+    "disbursements": []
+  }
+]
+```
+
+**Modelo**: `LoanDocument` em `lib/libs/servicing/models/loan_document_model.dart`
+
+## Governança mínima
+
+- Versionar mudanças breaking (`/v2/...`)
+- Não remover campo sem janela de migração
+- Tratar `nullability` explicitamente no modelo
+- Evitar lógica de negócio no `Api`; manter no `Repository`

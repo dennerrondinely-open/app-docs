@@ -1,0 +1,238 @@
+---
+title: Inventário completo de contratos
+description: Catálogo completo dos contratos implementados no projeto (HTTP e integrações de dados externas).
+---
+
+## Escopo
+
+Este inventário cobre todos os arquivos em `lib/libs/**/api/*_api.dart`.
+
+## `address` API
+
+Arquivo: `lib/libs/address/api/address_api.dart`
+
+| Método | Path | Retorno |
+| --- | --- | --- |
+| `GET` | `/v1/person/address/primary` | `Address` |
+| `POST` | `/v1/person/address/primary` | `Address` |
+| `GET` | `/v1/external/correios/$zipCode` | `Address` |
+
+## `auth` API
+
+Arquivo: `lib/libs/auth/api/auth_api.dart`
+
+| Método | Path | Retorno |
+| --- | --- | --- |
+| `POST` | `/v1/oauth/token-validation-code` | `Auth` |
+| `POST` | `/v1/user/send/validation-code?isNotFirstSend=$isNotFirstSend` | `Page` |
+| `POST` | `/v1/oauth/refresh` | `Auth` (refresh interno) |
+
+## `bank_account` API
+
+Arquivo: `lib/libs/bank_account/api/bank_account_api.dart`
+
+| Método | Path | Retorno |
+| --- | --- | --- |
+| `GET` | `/v1/person/bank/primary` | `BankAccount` |
+| `POST` | `/v1/person/bank` | `BankAccount` |
+
+## `customer_relationship` API
+
+Arquivo: `lib/libs/customer_relationship/api/customer_relationship_api.dart`
+
+| Método | Path | Retorno |
+| --- | --- | --- |
+| `GET` | `/v1/customer-relationship/preferences` | `CustomerRelationship` |
+| `POST` | `/v1/customer-relationship/preferences` | `void` |
+| `POST` | `/v1/customer-relationship/feedback` | `void` |
+
+## `external` API
+
+Arquivo: `lib/libs/external/api/external_api.dart`
+
+| Método | Path | Retorno |
+| --- | --- | --- |
+| `POST` | `/v1/external/allowme` | `void` |
+
+## `ledger` API
+
+Arquivo: `lib/libs/ledger/api/ledger_api.dart`
+
+| Método | Path | Retorno |
+| --- | --- | --- |
+| `DOWNLOAD` | URL dinâmica (URI recebida) | `void` |
+| `GET` | `/v1/ledger/books` | `List<Book>` |
+| `GET` | `/v1/ledger/books/$bookUuid/invoices` | `List<Invoice>` |
+| `GET` | `/v1/ledger/books/$bookUuid/invoice/$invoiceUuid/instalments` | `List<Instalment>` |
+| `GET` | `/v1/ledger/books/$bookUuid/loan/$loanUuid` | `Loan` |
+| `PATCH` | `/v1/ledger/books/$bookUuid/payment/$paymentUuid/overflow-transfer-info` | `void` |
+
+## `liveness` API
+
+Arquivo: `lib/libs/liveness/api/liveness_api.dart`
+
+| Método | Path | Retorno |
+| --- | --- | --- |
+| `POST` | `/v2/liveness` | `Liveness` |
+| `POST` | `/v1/liveness` | `Liveness` |
+| `GET` | `/v1/liveness` | `Liveness` |
+
+## `loan` API
+
+Arquivo: `lib/libs/loan/api/loan_api.dart`
+
+| Método | Path | Retorno |
+| --- | --- | --- |
+| `GET` | `/v1/loan/$loanId` | `Loan` |
+| `GET` | `/v1/loan/current` | `Loan` |
+| `PUT` | `/v1/loan/$loanId/basic-info` | `LoanOffer` |
+| `PUT` | `/v1/loan/$loanId/extended-info` | `Loan` |
+| `POST` | `/v1/loan/$loanId/select-offer` | `Loan` |
+| `POST` | `/v1/loan/$loanId/send-signature-code` | `void` |
+| `POST` | `/v1/loan/$loanId/sign-contract/${LoanProductCode.Limit}` | `Loan` |
+| `GET` | `/v1/loan/$loanId/contract` | `List<LoanLegalTermsSection>` |
+| `POST` | `/v2/loan/$loanId/attach/selfie/$documentId` | `Loan` |
+
+## `open_finance` API
+
+Arquivo: `lib/libs/open_finance/api/open_finance_api.dart`
+
+| Método | Path | Retorno |
+| --- | --- | --- |
+| `GET` | `/v1/data-collection/open-finance/last` | `OpenFinance` |
+| `POST` | `/v1/data-collection/open-finance` | `String` (`url`) |
+
+## `payment` API
+
+Arquivo: `lib/libs/payment/api/payment_api.dart`
+
+| Método | Path | Retorno |
+| --- | --- | --- |
+| `GET` | `/v2/payment/$bookUuid/pre-payment/simulation` | `List<Invoice>` |
+| `POST` | `/v2/payment/$bookUuid/settlement` | `PendingPayment` |
+| `GET` | `/v1/payment/$bookUuid/amortization` | `List<FlexPaymentStrategy>` |
+| `GET` | `/v1/payment/$bookUuid/amortization/simulation` | `FlexPaymentSimulation` |
+| `POST` | `/v2/payment/$bookUuid/amortization` | `PendingPayment` |
+| `GET` | `/v2/payment/$bookUuid/offers` | `List<PaymentOffer>` |
+| `POST` | `/v2/payment/$bookUuid/offers` | `PendingPayment` |
+| `GET` | `/v1/payment/ief` | `List<int>` |
+| `GET` | `/v1/payment/ief/$year` | `String` |
+
+## `person` API
+
+Arquivo: `lib/libs/person/api/person_api.dart`
+
+| Método | Path | Retorno |
+| --- | --- | --- |
+| `GET` | `/v1/person` | `Person` |
+| `GET` | `/v1/person/cbo` | `List<OccupationCbo>` |
+| `PUT` | `/v1/person` | `Person` |
+| `POST` | `/v1/person/update` | `SensitiveData` |
+| `POST` | `/v1/person/validate/code/$code` | `SensitiveData` |
+| `POST` | `/v2/person/validate/selfie/$documentId` | `SensitiveData` |
+| `POST` | `/v1/person/validate/selfie/$documentId` | `SensitiveData` |
+| `POST` | `/v1/person/update/$requestId/send` | `void` |
+
+## `personal_loan` API
+
+Arquivo: `lib/libs/personal_loan/api/personal_loan_api.dart`
+
+| Método | Path | Retorno |
+| --- | --- | --- |
+| `GET` | `/v1/personal-loan/current` | `Loan` |
+| `GET` | `/v1/personal-loan/$loanId/contract` | `List<LoanLegalTermsSection>` |
+| `GET` | `/v2/personal-loan/check-offer-availability` | `OfferAvailability` |
+| `GET` | `/v2/personal-loan/$loanId/offers` | `Offer` |
+| `PUT` | `/v1/personal-loan/$loanId/submit-final-extended-info` | `Loan` |
+| `POST` | `/v2/personal-loan/$loanId/pick-loan-condition/$conditionUuid` | `Loan` |
+| `POST` | `/v1/personal-loan/$loanId/send-signature-code` | `void` |
+| `POST` | `/v1/personal-loan/$loanId/sign-contract/${LoanProductCode.Personal}` | `Loan` |
+| `POST` | `/v2/personal-loan/$loanId/attach/selfie/$documentId` | `Loan` |
+| `POST` | `/v2/personal-loan/$loanId/attach/identity` | `Loan` |
+
+## `pix_key_info` API
+
+Arquivo: `lib/libs/pix_key_info/api/pix_key_info_api.dart`
+
+| Método | Path | Retorno |
+| --- | --- | --- |
+| `POST` | `/v1/pix/key-info` | `PixKeyInfo` |
+| `POST` | `/v1/pix/qrcode-info` | `PixKeyInfo` |
+
+## `product` API
+
+Arquivo: `lib/libs/product/api/product_api.dart`
+
+| Método | Path | Retorno |
+| --- | --- | --- |
+| `GET` | `/v2/product/loan-limit` | `LimitDetail` |
+| `GET` | `/v1/product/loan-personal-geru` | `LoanLegacy?` |
+| `GET` | `/v1/product/shop/partners` | `List<GeruShopPartner>` |
+| `GET` | `/v1/product/loan-bnpl/applications` | `List<BnplApplication>` |
+| `GET` | `/v2/product/loan-bnpl/$origin/application/$applicationId/diagnostic` | `BnplApplication` |
+| `GET` | `/v1/product/loan-bnpl/$origin/application/$applicationId/diagnostic` | `BnplApplication` |
+| `POST` | `/v2/product/loan-bnpl/$origin/application/$applicationId/document/$documentId?isIos=$isIos` | `BnplApplication` |
+| `POST` | `/v1/product/loan-bnpl/$origin/application/$applicationId/document/$documentId` | `BnplApplication` |
+| `GET` | `/v1/external/insurance/ticket` | bytes/PDF |
+
+## `product_sections` API
+
+Arquivo: `lib/libs/product_sections/api/product_section_api.dart`
+
+Esta API não usa HTTP REST; ela usa Firestore.
+
+| Fonte | Operação | Retorno |
+| --- | --- | --- |
+| `sections` | `where(active == true).get()` | `List<ProductSection>` |
+| `home_products` | `where(active == true).snapshots()` | `Stream<List<ProductSection>>` |
+
+## `public` API
+
+Arquivo: `lib/libs/public/api/public_api.dart`
+
+| Método | Path | Retorno |
+| --- | --- | --- |
+| `POST` | `/v1/public/person/update` | `SensitiveData` |
+| `POST` | `/v1/public/person/validate/code` | `SensitiveData` |
+| `POST` | `/v1/public/person/send/code` | `void` |
+| `POST` | `/v1/public/person/validate/selfie/$documentId?useNewApi=true` | `SensitiveData` |
+| `POST` | `/v1/public/liveness` | `Liveness` |
+| `POST` | `/v1/public/liveness` (V1) | `Liveness` |
+| `GET` | `/v1/public/liveness` | `Liveness` |
+
+## `servicing` API
+
+Arquivo: `lib/libs/servicing/api/servicing_api.dart`
+
+| Método | Path | Retorno |
+| --- | --- | --- |
+| `DOWNLOAD` | URL dinâmica (URI recebida) | `void` |
+| `GET` | `/v1/servicing/loan/all` | `List<LoanDocument>` |
+| `GET` | `/v1/servicing/documents/$loanUuid` | `List<Document>` |
+| `GET` | `/v1/servicing/documents/$loanUuid/ccb` | `String` |
+| `GET` | `/v1/servicing/documents/$loanUuid/discharge-term` | `String` |
+
+## `user` API
+
+Arquivo: `lib/libs/user/api/user_api.dart`
+
+| Método | Path | Retorno |
+| --- | --- | --- |
+| `POST` | `/v1/user/create` | `void` |
+| `POST` | `/v1/user/activate` | `Auth` |
+| `DELETE` | `/v1/user/delete` | `void` |
+| `POST` | `/v1/user/activate/send` | `void` |
+
+## `workflow` API
+
+Arquivo: `lib/libs/workflow/api/workflow_api.dart`
+
+| Método | Path | Retorno |
+| --- | --- | --- |
+| `GET` | `/v2/workflow` | `Workflow` |
+
+## Observações
+
+- Alguns contratos usam `queryParameters` para filtros e identificadores.
+- Alguns endpoints usam path dinâmico composto em runtime (ex.: contratos de documento em `product`).
+- Downloads usam `downloadFile` ou `ResponseType.bytes`, portanto não retornam JSON.

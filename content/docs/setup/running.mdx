@@ -1,0 +1,68 @@
+---
+title: Execução
+description: Como iniciar o Geru App em cada flavor e gerar builds locais.
+---
+
+## Rodando localmente
+
+### Homolog
+
+```bash
+fvm flutter run lib/main.homolog.dart --flavor=homolog
+```
+
+### Desenvolvimento
+
+```bash
+fvm flutter run lib/main.dev.dart --flavor=dev
+```
+
+### Produção
+
+```bash
+fvm flutter run lib/main.dart --flavor=prod
+```
+
+### Sandbox
+
+```bash
+fvm flutter run lib/main.sandbox.dart --flavor=sandbox
+```
+
+## Builds locais
+
+### APK
+
+```bash
+fvm flutter build apk --flavor=homolog -t lib/main.homolog.dart
+fvm flutter build apk --flavor=dev -t lib/main.dev.dart
+fvm flutter build apk --flavor=prod -t lib/main.dart
+```
+
+## Testes
+
+```bash
+fvm flutter test
+```
+
+Com cobertura:
+
+```bash
+fvm flutter test --coverage
+```
+
+## Formatação
+
+```bash
+dart format .
+```
+
+## Boot da aplicação
+
+O fluxo de bootstrap segue esta sequência:
+
+1. `main*.dart` define a `Flavor` e a `apiUrl`
+2. `initApp()` inicializa `App`, `Firebase`, `Storage` e locale
+3. `runApp(ModularApp(...))` sobe `RootModule` e `RootWidget`
+4. `RootWidget` cria o `MaterialApp.router`
+5. `RootModule` registra `binds`, guards e `ModuleRoute`s

@@ -1,0 +1,193 @@
+---
+title: Inventário de blocs, events e states
+description: Catálogo objetivo dos principais arquivos de gerenciamento de estado do app.
+---
+
+## Blocs
+
+### Base compartilhada (`lib/libs`)
+
+- `AuthBloc`
+- `PersonBloc`
+- `OpenFinanceBloc`
+- `RemoteConfigBloc`
+- `AddressBloc`
+- `ZipCodeToAddressBloc`
+- `BankAccountBloc`
+- `CustomerRelationshipBloc`
+- `InitializeAppBloc`
+- `ProductSectionBloc`
+- `RateAppBloc`
+
+### Features (`lib/modules`)
+
+- `IntroBloc`
+- `LoginBloc`
+- `RegisterBloc`
+- `AddressDataBloc`
+- `BiometricsBloc`
+- `ExtendedInfoBloc`
+- `FeedbackBloc`
+- `HomeBloc`
+- `SensitiveInfoBloc`
+- `LivenessBloc`
+- `OverflowBloc`
+- `PaymentBloc`
+- `InvoicesBloc`
+- `InstalmentsBloc`
+- `PaymentSlipBloc`
+- `PrePaymentBloc`
+- `FlexPaymentBloc`
+- `OverduePaymentBloc`
+- `PersonalLoanBloc`
+- `PersonalLoanIntroBloc`
+- `PersonalLoanOfferBloc`
+- `PersonalDocumentBloc`
+- `ContractSignatureBloc` em `personal_loan`
+- `PersonalDataBloc` em `personal_loan`
+- `NewTransactionBloc`
+- `TransactionOnboardingBloc`
+- `TransactionAmountBloc`
+- `TransactionKeyBloc`
+- `TransactionPollingBloc`
+- `QRCodeReaderBloc`
+- `ContractSignatureBloc` em `transaction`
+- `DocumentsBloc`
+- `IncomeReportBloc`
+- `ProfessionalDataBloc`
+- `SensitiveDataBloc`
+- `AccountDeleteBloc`
+- `UpdateDataBloc`
+- `AppUpdateBloc`
+- `WorkflowBloc`
+- blocs de produto: `AmazonProductBloc`, `BnplProductBloc`, `FgtsProductBloc`, `GeruPayProductBloc`, `GeruShopProductBloc`, `PersonalLoanProductBloc`
+
+## Events mais representativos
+
+### Autenticação e sessão
+
+- `AuthEventInitialized`
+- `AuthEventAuthRequested`
+- `AuthEventAuthenticated`
+- `AuthEventLogoutRequested`
+- `LoginEventCodeRequested`
+- `LoginEventCodeSubmitted`
+- `RegisterEventContactDataSubmitted`
+- `RegisterEventActivationCodeSubmitted`
+
+### Workflow e antifraude
+
+- `WorkflowEventDataRequested`
+- `WorkflowEventLimitRequested`
+- `WorkflowEventOpenFinanceClosed`
+- `WorkflowEventLivenessRequested`
+- `LivenessEventInitialized`
+- `LivenessEventCaptureStarted`
+- `LivenessEventCaptureSuccessful`
+- `OpenFinanceEventStarted`
+- `OpenFinanceEventFinished`
+
+### Crédito pessoal e transações
+
+- `PersonalLoanEventNecessaryDocumentsRequested`
+- `PersonalLoanEventConditionsSelected`
+- `PersonalLoanEventLivenessCompleted`
+- `PersonalLoanOfferEventSubmitted`
+- `NewTransactionEventKeySubmitted`
+- `NewTransactionEventRequestedOffers`
+- `NewTransactionEventConditionSubmitted`
+- `ContractSignatureEventCodeSubmitted`
+
+### Pagamentos e documentos
+
+- `PaymentEventInitialized`
+- `PaymentEventPaymentRequested`
+- `InvoicesEventBookSelected`
+- `PaymentSlipEventPdfRequested`
+- `PrePaymentEventSimulationRequested`
+- `FlexPaymentSimulationRequested`
+- `OverduePaymentEventOffersRequested`
+- `DocumentsEventDownloadRequested`
+- `IncomeReportEventDownloadRequested`
+
+## States principais
+
+### Base compartilhada
+
+- `AuthState`
+- `PersonState`
+- `OpenFinanceState`
+- `RemoteConfigState`
+- `AddressState`
+- `ZipCodeToAddressState`
+- `BankAccountState`
+
+### Fluxos de produto e operação
+
+- `WorkflowState`
+- `LivenessState`
+- `LoginState`
+- `RegisterState`
+- `HomeState`
+- `PaymentState`
+- `InvoicesState`
+- `PrePaymentState`
+- `FlexPaymentState`
+- `OverduePaymentState`
+- `PersonalLoanState`
+- `PersonalLoanOfferState`
+- `NewTransactionState`
+- `TransactionAmountState`
+- `TransactionKeyState`
+- `TransactionPollingState`
+- `DocumentsState`
+- `IncomeReportState`
+- `UpdateDataState`
+
+## Onde estão os arquivos
+
+### Autenticação
+
+- `lib/libs/auth/blocs/auth_bloc.dart`
+- `lib/libs/auth/blocs/auth_event.dart`
+- `lib/libs/auth/blocs/auth_state.dart`
+- `lib/modules/login/bloc/login_bloc.dart`
+- `lib/modules/login/bloc/login_event.dart`
+- `lib/modules/login/bloc/login_state.dart`
+- `lib/modules/register/bloc/register_bloc.dart`
+- `lib/modules/register/bloc/register_event.dart`
+- `lib/modules/register/bloc/register_state.dart`
+
+### Workflow e cadastro
+
+- `lib/modules/workflow/blocs/workflow_bloc.dart`
+- `lib/modules/workflow/blocs/workflow_event.dart`
+- `lib/modules/workflow/blocs/workflow_state.dart`
+- `lib/modules/address/blocs/address_data_bloc.dart`
+- `lib/modules/address/blocs/address_data_event.dart`
+- `lib/modules/address/blocs/address_data_state.dart`
+- `lib/modules/extended_info/blocs/extended_info_bloc.dart`
+- `lib/modules/extended_info/blocs/extended_info_event.dart`
+- `lib/modules/extended_info/blocs/extended_info_state.dart`
+
+### Crédito, Pix e pagamentos
+
+- `lib/modules/personal_loan/blocs/**`
+- `lib/modules/transaction/blocs/**`
+- `lib/modules/payment/blocs/**`
+
+### Perfil e atualização pública
+
+- `lib/modules/profile/blocs/**`
+- `lib/modules/public/blocs/**`
+
+## Observação de manutenção
+
+Como o projeto possui muitos blocs, a documentação privilegia:
+
+- blocs estruturais
+- blocs de jornada crítica
+- nomes reais de `event` e `state`
+- localização dos arquivos para leitura aprofundada
+
+A recomendação é manter esta página atualizada sempre que um novo fluxo for criado ou quando um `Bloc` mudar de responsabilidade.

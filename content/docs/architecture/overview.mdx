@@ -1,0 +1,94 @@
+---
+title: Arquitetura do projeto
+description: Como o app está organizado em módulos, bibliotecas, rotas e serviços.
+---
+
+## Arquitetura em camadas
+
+O projeto adota uma separação prática entre UI, fluxo de negócio e acesso a dados.
+
+### Camada de aplicação
+
+Fica em `lib/modules` e concentra:
+
+- `pages/`: telas
+- `widgets/`: componentes visuais locais
+- `bloc/` ou `blocs/`: coordenação do fluxo
+- `*_routes.dart`: mapeamento de rotas do módulo
+- `*_module.dart`: registro de binds e composição do módulo
+
+### Camada de domínio e integração
+
+Fica em `lib/libs` e concentra:
+
+- `api/`: contratos HTTP
+- `repositories/`: orquestração de acesso a dados
+- `models/`: contratos de entrada e saída
+- `blocs/`: estados compartilhados entre múltiplos módulos
+- `storage/`: persistência local
+
+### Camada de serviços
+
+Fica em `lib/services` e encapsula integrações de dispositivo e parceiros, como:
+
+- `AllowmeService`
+- `DeepLinkService`
+- `DeviceService`
+- `FileService`
+- `Motiv8Service`
+- `PermissionService`
+- `SecurityService`
+- `SerasaCaptureService`
+
+## Composição raiz
+
+A composição principal acontece em `lib/modules/root/root_module.dart`.
+
+### Binds raiz relevantes
+
+- `HttpClient` com `UtmInterceptor` e `ErrorInterceptor`
+- `AuthBloc`, `PersonBloc`, `WorkflowBloc`, `LivenessBloc`, `OpenFinanceBloc`
+- repositories de `auth`, `person`, `loan`, `product`, `ledger`, `workflow`, `public`
+- serviços como `SecurityService`, `AllowmeService` e `Motiv8Service`
+
+### Módulos roteados na raiz
+
+- `IntroModule`
+- `LoginModule`
+- `RegisterModule`
+- `HomeModule`
+- `ProfileModule`
+- `PaymentModule`
+- `TransactionModule`
+- `PersonalLoanModule`
+- `WorkflowModule`
+- `OpenFinanceModule`
+- `LivenessModule`
+- `BiometricsModule`
+- `PublicModule`
+- `ErrorModule`
+
+## Módulos de negócio principais
+
+| Módulo | Objetivo |
+| --- | --- |
+| `intro` | entrada e onboarding inicial |
+| `login` / `register` | autenticação e ativação |
+| `home` | dashboard e produtos disponíveis |
+| `workflow` | orquestração do onboarding e elegibilidade |
+| `personal_loan` | jornada completa de crédito pessoal |
+| `transaction` | Pix e uso de limite |
+| `payment` | faturas, boleto, Pix, atraso, antecipação |
+| `profile` | dados cadastrais, documentos, preferences |
+| `public` | atualização cadastral pública |
+| `liveness` / `biometrics` | prova de vida e autenticação local |
+| `open_finance` | consentimento e coleta de dados |
+| `product` | vitrines e jornadas por produto |
+
+## Padrão predominante
+
+O padrão mais recorrente no projeto é:
+
+`Page -> Bloc -> Repository -> Api -> HttpClient`
+
+Esse fluxo mantém a UI desacoplada das integrações e facilita testes unitários e evolução por feature.

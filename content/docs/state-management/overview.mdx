@@ -1,0 +1,86 @@
+---
+title: Blocs, events e states
+description: Estratégia de gerenciamento de estado e blocs mais relevantes do Geru App.
+---
+
+## Estratégia adotada
+
+O projeto usa `Bloc` como padrão principal de orquestração de estado.
+
+A divisão é clara:
+
+- blocs de domínio em `lib/libs/**/blocs`
+- blocs de fluxo e interface em `lib/modules/**/blocs`
+
+## Padrão de implementação
+
+A implementação segue normalmente este desenho:
+
+- `*_bloc.dart`: regras de transição e efeitos
+- `*_event.dart`: intenções da UI ou do fluxo
+- `*_state.dart`: estado serializado para renderização
+
+## Blocs estruturais
+
+| Bloc | Responsabilidade | Arquivo |
+| --- | --- | --- |
+| `AuthBloc` | autenticação, refresh, logout e sessão | `lib/libs/auth/blocs/auth_bloc.dart` |
+| `PersonBloc` | dados carregados da pessoa logada | `lib/libs/person/blocs/person_bloc.dart` |
+| `OpenFinanceBloc` | inicia, acompanha e conclui consentimento | `lib/libs/open_finance/blocs/open_finance_bloc.dart` |
+| `LivenessBloc` | captura, envio e polling de prova de vida | `lib/modules/liveness/blocs/liveness_bloc.dart` |
+| `WorkflowBloc` | decide próximas etapas do onboarding | `lib/modules/workflow/blocs/workflow_bloc.dart` |
+| `InitializeAppBloc` | ativa integrações após autenticação | `lib/libs/initialize_app/blocs/initialize_app_bloc.dart` |
+
+## Blocs de jornadas principais
+
+| Domínio | Bloc | Papel |
+| --- | --- | --- |
+| Login | `LoginBloc` | documento, envio de código e autenticação |
+| Cadastro | `RegisterBloc` | criação, ativação e aceite de termos |
+| Home | `HomeBloc` | cards, banners e produtos expostos |
+| Crédito pessoal | `PersonalLoanBloc` | proposta, documentos, condições e assinatura |
+| Pix/Transação | `NewTransactionBloc` | chave, valor, oferta, contrato e recibo |
+| Pagamentos | `PaymentBloc` | books, invoices e roteamento do fluxo de pagamento |
+| Perfil | `PersonalDataBloc` / `ProfessionalDataBloc` | atualização cadastral |
+| Documentos | `DocumentsBloc` | contratos, PDFs e comprovantes |
+
+## Padrão de events
+
+Os eventos seguem nomenclatura previsível:
+
+- `Initialized`
+- `LoadRequested`
+- `Submitted`
+- `Updated`
+- `ClearRequested`
+- `Finished`
+- `Failed`
+- `CodeRequested`
+- `CodeSubmitted`
+- `LivenessCompleted`
+
+Isso ajuda a ler rapidamente a intenção de cada fluxo.
+
+## Padrão de states
+
+Os states normalmente carregam:
+
+- status do fluxo
+- payload atual da tela
+- erros de validação
+- dados carregados das APIs
+- flags de loading, success e failure
+
+## Como navegar pelo estado
+
+Ao depurar uma jornada:
+
+1. abra o `Page`
+2. identifique o `Bloc` usado pela tela
+3. leia `event.dart`
+4. leia `state.dart`
+5. por fim, leia o `bloc.dart`
+
+## Relação com repositórios
+
+Em geral, blocs não chamam `Api` diretamente. Eles falam com `Repository`, que centraliza conversões e integrações. Isso reduz acoplamento e simplifica testes.
