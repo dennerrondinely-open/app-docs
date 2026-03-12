@@ -1,5 +1,5 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import { initializeApp, getApps, getApp } from 'firebase/app';
+import { getAuth, Auth } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -10,5 +10,29 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+// Initialize Firebase only on client side
+let auth: Auth;
+
+const initializeFirebase = () => {
+  if (typeof window === 'undefined') {
+    throw new Error('Firebase can only be initialized on the client side');
+  }
+
+  try {
+    const apps = getApps();
+    const app = apps.length > 0 ? getApp() : initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    return auth;
+  } catch (error) {
+    console.error('Failed to initialize Firebase:', error);
+    throw error;
+  }
+};
+
+export const getFirebaseAuth = (): Auth => {
+  if (!auth) {
+    auth = initializeFirebase();
+  }
+  return auth;
+};
+

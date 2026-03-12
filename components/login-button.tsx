@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+import { getFirebaseAuth } from '@/lib/firebase';
 import { useAuth } from '@/lib/use-auth';
 import { isEmailAllowed, getEmailErrorMessage } from '@/lib/email-validation';
 
@@ -18,6 +18,7 @@ export function LoginButton() {
     try {
       setLoading(true);
       setError(null);
+      const auth = getFirebaseAuth();
       const result = await signInWithPopup(auth, googleProvider);
       
       // Validate email domain
@@ -38,6 +39,7 @@ export function LoginButton() {
     try {
       setLoading(true);
       setShowDropdown(false);
+      const auth = getFirebaseAuth();
       await signOut(auth);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao fazer logout');
