@@ -1,0 +1,12 @@
+{
+  "projects": {
+    "default": "geru-app-dev"
+  },
+  "targets": {
+    "geru-app-dev": {
+      "hosting": {
+        "docs": ["geru-app-dev-docs"]
+      }
+    }
+  }
+}
