@@ -12,6 +12,7 @@ export function LoginButton() {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const handleGoogleSignIn = async () => {
     try {
@@ -36,6 +37,7 @@ export function LoginButton() {
   const handleSignOut = async () => {
     try {
       setLoading(true);
+      setShowDropdown(false);
       await signOut(auth);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao fazer logout');
@@ -47,17 +49,42 @@ export function LoginButton() {
 
   if (user) {
     return (
-      <div className="flex items-center gap-4">
-        <div className="text-sm">
-          <p className="font-medium">{user.displayName || user.email}</p>
-        </div>
+      <div className="relative">
         <button
-          onClick={handleSignOut}
-          disabled={loading}
-          className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50"
+          onClick={() => setShowDropdown(!showDropdown)}
+          className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-fd-accent transition-colors"
         >
-          {loading ? 'Saindo...' : 'Sair'}
+          {user.photoURL ? (
+            <img
+              src={user.photoURL}
+              alt={user.displayName || 'User'}
+              className="w-8 h-8 rounded-full"
+            />
+          ) : (
+            <div className="w-8 h-8 rounded-full bg-fd-primary flex items-center justify-center text-white text-sm font-medium">
+              {(user.displayName || user.email)?.[0]?.toUpperCase()}
+            </div>
+          )}
+          <span className="text-sm font-medium text-fd-foreground hidden sm:inline">
+            {user.displayName || user.email}
+          </span>
         </button>
+
+        {showDropdown && (
+          <div className="absolute right-0 mt-1 w-48 bg-fd-background border border-fd-border rounded-lg shadow-lg z-50">
+            <div className="p-3 border-b border-fd-border">
+              <p className="text-sm font-medium text-fd-foreground">{user.displayName}</p>
+              <p className="text-xs text-fd-muted-foreground">{user.email}</p>
+            </div>
+            <button
+              onClick={handleSignOut}
+              disabled={loading}
+              className="w-full text-left px-3 py-2 text-sm text-fd-foreground hover:bg-fd-accent transition-colors disabled:opacity-50 rounded-b-lg"
+            >
+              {loading ? 'Saindo...' : 'Sair'}
+            </button>
+          </div>
+        )}
       </div>
     );
   }
@@ -67,11 +94,11 @@ export function LoginButton() {
       <button
         onClick={handleGoogleSignIn}
         disabled={loading}
-        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+        className="px-4 py-2 bg-fd-primary text-fd-primary-foreground rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 font-medium text-sm"
       >
         {loading ? 'Entrando...' : 'Entrar com Google'}
       </button>
-      {error && <p className="mt-2 text-red-600 text-sm">{error}</p>}
+      {error && <p className="mt-2 text-fd-destructive text-sm">{error}</p>}
     </div>
   );
 }
