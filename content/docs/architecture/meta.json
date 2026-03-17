@@ -1,4 +1,4 @@
 {
   "title": "Arquitetura",
-  "pages": ["overview", "components", "data-models", "endpoints", "screens", "flows"]
+  "pages": ["overview", "components", "data-models", "endpoints", "screens", "flows", "login-biometria-refresh-token"]
 }
