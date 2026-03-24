@@ -1,4 +1,4 @@
 {
   "title": "Arquitetura",
-  "pages": ["overview", "components", "data-models", "endpoints", "screens", "flows", "login-biometria-refresh-token", "fluxo-dados-home"]
+  "pages": ["overview", "components", "data-models", "endpoints", "screens", "flows", "cadastro-novos-usuarios", "login-biometria-refresh-token", "fluxo-dados-home"]
 }
